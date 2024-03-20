@@ -13,6 +13,7 @@ def main():
     try:
         with open(filename, 'r') as file:
             text_input = file.read()
+            text_input+= 10*" "
             #print(text_input)
     except FileNotFoundError:
         print("File Not Found: Use the absolute path.")
@@ -34,7 +35,7 @@ def main():
     isTitle = False
     counter = 0
     for i in range((len(text_input)-1)):
-        if text_input[i] == '`' and counter > 0: text_output += """</div><br><div class="cyan-border">"""
+        if text_input[i] == '`' and counter > 0: text_output += """</div><div class="cyan-border">"""
         elif text_input[i] == '`' and counter == 0: text_output += ''
         elif text_input[i] == '#' and (text_input[i-1] == '\n' or text_input[i-1] == '`'):
             text_output += '<b>'
@@ -50,7 +51,7 @@ def main():
             if isTitle == True:
                 text_output += '</b>'
                 isTitle = False
-            if text_input[i+1] == '`' or text_input[i+1] == '\n': continue
+            if text_input[i+1] == '`' or (text_input[i+1] == '\n' and text_input[i+2] == '\n'): continue
             else: text_output += "<br>"
         elif text_input[i] == '[':
             text_output += f"""<b><span class="censored" onclick="toggleVisibility(this)" style="color: {html_font_color_code};">"""
